@@ -63,9 +63,9 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         
         removeSubviews(50)
         
-        var wBounds = self.view.bounds.width
-        var hBounds = self.view.bounds.height
-        var titleSize = CGRect(x: 0, y: 10, width: wBounds, height: 20)
+        var viewWidth = self.mapView.frame.width
+        
+        var titleSize = CGRect(x: 0, y: 10, width: viewWidth, height: 20)
         
         var navTitleLabel = UILabel()
         navTitleLabel.frame = titleSize
@@ -74,7 +74,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         navTitleLabel.text = marker.title
         navTitleLabel.textAlignment = NSTextAlignment.Center
         
-        var textSize = CGRect(x: 0, y: 25, width: wBounds, height: 50)
+        var textSize = CGRect(x: 0, y: 25, width: viewWidth, height: 50)
         
         var mTextView: UITextView = UITextView()
         mTextView.frame = textSize
@@ -88,7 +88,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         var statusbarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
         var windowHeight = navbarHeight! + statusbarHeight + 10
         
-        var mWindow = UIView(frame:CGRectMake(0, 0, self.view.frame.width, 80))
+        var mWindow = UIView(frame:CGRectMake(0, 0, viewWidth, 80))
         mWindow.autoresizesSubviews = true
         mWindow.autoresizingMask = UIViewAutoresizing.FlexibleWidth
         mWindow.backgroundColor = UIColor(white: 1, alpha: 0.6)
