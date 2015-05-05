@@ -15,8 +15,10 @@ class ViewController: UIViewController, GMSMapViewDelegate {
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var bannerView: GADBannerView!
     
-    private var ibikeList = NSArray()
     var selectSna = ""
+    private var ibikeList = NSArray()
+    private var selectMarker: GMSMarker?
+    private var onFocusSna = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +35,11 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         
         var request: GADRequest = GADRequest()
         
-        request.testDevices = ["5ED7C1CA-1E9B-4363-B4D6-D73BFB11948C"]
+        request.testDevices = ["d744895655b7a2536fe4da3cfb24721cec0b2cfb"]
         
         self.bannerView.loadRequest(request)
         
         self.view.addSubview(self.bannerView)
-    }
-    
-    @IBAction func updateMap(sender: UIButton) {
-        drawMaker()
     }
     
     // 點擊地標
@@ -57,32 +55,86 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         removeSubviews(50)
     }
     
+    func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
+        
+        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+            var diffLatitude = abs(self.mapView.myLocation.coordinate.latitude - position.target.latitude) as Double
+            var diffLongitude = abs(self.mapView.myLocation.coordinate.longitude - position.target.longitude) as Double
+        
+            if self.mapView.myLocationEnabled {
+                if (diffLatitude < 0.000001 && diffLongitude < 0.000001) {
+                    removeSubviews(50)
+                }
+            }
+        }
+    }
+    
     private func moveToMarker(marker: GMSMarker) {
+        var ibikeData = BikeData()
+        ibikeList = ibikeData.getBikeList()
+        let favoriteList = ibikeData.readData()
         var camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 16)
         self.mapView.camera = camera
         
+        var infoTitle = ""
+        var infoSnippet = ""
+        
         removeSubviews(50)
+        
+        for temp in ibikeList {
+            var tempDetail = temp as! BikeViewData
+            
+            if marker.title == tempDetail.sna {
+                onFocusSna = tempDetail.sna
+                infoTitle = "站名:\(tempDetail.sna)"
+                infoSnippet = "可借數量:\(tempDetail.sbi)  可停數量:\(tempDetail.bemp) \n更新時間:\(tempDetail.update)"
+            }
+        }
         
         var viewWidth = self.mapView.frame.width
         
+        // 標題
         var titleSize = CGRect(x: 0, y: 10, width: viewWidth, height: 20)
         
         var navTitleLabel = UILabel()
         navTitleLabel.frame = titleSize
+        navTitleLabel.font = UIFont.boldSystemFontOfSize(18.0)
         navTitleLabel.autoresizesSubviews = true
         navTitleLabel.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        navTitleLabel.text = marker.title
+        navTitleLabel.text = infoTitle
         navTitleLabel.textAlignment = NSTextAlignment.Center
         
-        var textSize = CGRect(x: 0, y: 25, width: viewWidth, height: 50)
+        // 內文
+        var textSize = CGRect(x: 0, y: 30, width: viewWidth, height: 50)
         
         var mTextView: UITextView = UITextView()
         mTextView.frame = textSize
+        mTextView.font = UIFont.systemFontOfSize(15.0)
+        mTextView.editable = false
         mTextView.autoresizesSubviews = true
         mTextView.autoresizingMask = UIViewAutoresizing.FlexibleWidth
         mTextView.backgroundColor = UIColor(white: 1, alpha: 0)
-        mTextView.text = marker.snippet
+        mTextView.text = infoSnippet
         mTextView.textAlignment = NSTextAlignment.Left
+        
+        // 加到最愛按鈕
+        var buttonSize = CGRect(x: (viewWidth - 60), y: 15, width: 45, height: 45)
+        
+        var imageName = "un_star.png"
+        for temp in favoriteList  {
+            if (temp as! NSString) == onFocusSna {
+                imageName = "star.png"
+            }
+        }
+        
+        let buttonImage = UIImage(named: imageName)?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        let mButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        
+        mButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        mButton.frame = buttonSize
+        mButton.backgroundColor = UIColor.clearColor()
+        mButton.setImage(buttonImage, forState: .Normal)
+        mButton.addTarget(self, action: Selector("starButton:"), forControlEvents: .TouchUpInside)
         
         var navbarHeight = self.navigationController?.navigationBar.frame.origin.y
         var statusbarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
@@ -95,16 +147,57 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         mWindow.tag = 50
         mWindow.addSubview(navTitleLabel)
         mWindow.addSubview(mTextView)
+        mWindow.addSubview(mButton)
         
         self.mapView.addSubview(mWindow)
+        
+        //Constraints
+        let viewsDict = ["btn": mButton]
+        
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[btn]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDict))
+        
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-15-[btn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDict))
+            
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[btn(==45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDict))
+            
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[btn(==45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDict))
+        
+        selectMarker = marker
+    }
+    
+    // 加入最愛
+    func starButton(sender: UIButton!) {
+        var ibikeData = BikeData()
+        let favoriteList = ibikeData.readData()
+        var haveStar = false
+        
+        for temp in favoriteList  {
+            if temp as? NSString == onFocusSna {
+                haveStar = true
+            }
+        }
+        
+        if haveStar {
+            favoriteList.removeObject(onFocusSna)
+            ibikeData.delData(favoriteList)
+        } else {
+            ibikeData.addData("\(onFocusSna)")
+        }
+        
+        if selectMarker != nil {
+            moveToMarker(selectMarker!)
+        }
     }
     
     // 移除副表單
     private func removeSubviews(viewTag: NSInteger){
         var subviews = self.mapView.subviews
+        
         for subview in subviews {
             subview.viewWithTag(viewTag)?.removeFromSuperview()
         }
+        onFocusSna = ""
+        selectMarker = nil
     }
     
     // 繪製地標
@@ -112,24 +205,31 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         var ibikeData = BikeData()
         ibikeList = ibikeData.getBikeList()
         
-        var camera = GMSCameraPosition.cameraWithTarget(CLLocationCoordinate2DMake(24.150381, 120.669015), zoom: 13)
+        removeSubviews(50)
         
-        //self.mapView.frame = CGRectZero
+        var defaultLocation = CLLocationCoordinate2DMake(24.150381, 120.669015)
+        
+        if self.mapView.myLocation != nil {
+            defaultLocation = self.mapView.myLocation.coordinate
+        }
+        
+        var camera = GMSCameraPosition.cameraWithTarget(defaultLocation, zoom: 14)
+        
         self.mapView.camera = camera
         self.mapView.myLocationEnabled = true
         self.mapView.settings.myLocationButton = true
         self.mapView.delegate = self
         self.mapView.tag = 88
         
-        var selectMarker: GMSMarker!
+        var selectMarker: GMSMarker?
         
         for temp in ibikeList {
             
-            var tempDetail = temp as BikeViewData
+            var tempDetail = temp as! BikeViewData
             var market = GMSMarker()
             
             market.position = CLLocationCoordinate2DMake(tempDetail.lat, tempDetail.lng)
-            market.title = "站名:\(tempDetail.sna)"
+            market.title = "\(tempDetail.sna)"
             market.snippet = "可借數量:\(tempDetail.sbi) \n可停數量:\(tempDetail.bemp) \n更新時間:\(tempDetail.update)"
             
             // ubike 庫存率
@@ -153,8 +253,8 @@ class ViewController: UIViewController, GMSMapViewDelegate {
             }
         }
         
-        if (selectSna != "") {
-            moveToMarker(selectMarker)
+        if (selectSna != "" && selectMarker != nil) {
+            moveToMarker(selectMarker!)
             selectSna = ""
         }
     }

@@ -18,6 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         GMSServices.provideAPIKey("AIzaSyDG9ulAsAdVEXJ3uAKUbYAfYViEA4hB3DQ")
         
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        
+        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+        let path = documentDir.stringByAppendingPathComponent("Data.plist")
+        
+        var fileManager = NSFileManager.defaultManager()
+        
+        if (!(fileManager.fileExistsAtPath(path)))
+        {
+            println("重寫檔案")
+            var bundle = NSBundle.mainBundle().pathForResource("Data", ofType: "plist")!
+            fileManager.copyItemAtPath(bundle, toPath: path, error:nil)
+        }
+        
         return true
     }
 

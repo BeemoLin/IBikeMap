@@ -15,8 +15,22 @@ class BikeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.backgroundColor = UIColor.clearColor()
+        
         var bikeData = BikeData()
         ibikeList = bikeData.getBikeList()
+        
+        var refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: Selector("sortArray"), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl = refreshControl
+    }
+    
+    func sortArray() {
+        var bikeData = BikeData()
+        ibikeList = bikeData.getBikeList()
+        
+        tableView.reloadData()
+        refreshControl?.endRefreshing()
     }
 
     // MARK: - Table view data source
@@ -31,21 +45,23 @@ class BikeTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
         
-        let update = (ibikeList[indexPath.section] as BikeViewData).update
-        let sbi = (ibikeList[indexPath.section] as BikeViewData).sbi
-        let bemp = (ibikeList[indexPath.section] as BikeViewData).bemp
+        let sna = (ibikeList[indexPath.section] as! BikeViewData).sna
+        let update = (ibikeList[indexPath.section] as! BikeViewData).update
+        let sbi = (ibikeList[indexPath.section] as! BikeViewData).sbi
+        let bemp = (ibikeList[indexPath.section] as! BikeViewData).bemp
         
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        cell.textLabel?.text = (ibikeList[indexPath.section] as BikeViewData).sna
+        cell.textLabel?.text = sna
         cell.detailTextLabel?.text = "可借車輛:\(sbi) / 可停車位:\(bemp)"
+        
         return cell
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        let area = (ibikeList[section] as BikeViewData).sarea
+        let area = (ibikeList[section] as! BikeViewData).sarea
         
         if areaTemp != area {
             areaTemp = area
@@ -56,16 +72,9 @@ class BikeTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var mapView = self.storyboard?.instantiateViewControllerWithIdentifier("MapView") as ViewController
+        var mapView = self.storyboard?.instantiateViewControllerWithIdentifier("MapView") as! ViewController
         
-        mapView.selectSna = (ibikeList[indexPath.section] as BikeViewData).sna
+        mapView.selectSna = (ibikeList[indexPath.section] as! BikeViewData).sna
         self.navigationController?.pushViewController(mapView, animated: true)
     }
-    
-    // MARK: - Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
-    }
-
-
 }

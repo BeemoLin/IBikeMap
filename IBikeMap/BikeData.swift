@@ -22,7 +22,7 @@ class BikeData: NSObject {
         
         for result in iBikes {
             var ibikeViewData = BikeViewData()
-            var ibikeDeatil = BikeDetail(ibikes: result as NSDictionary)
+            var ibikeDeatil = BikeDetail(ibikes: result as! NSDictionary)
             
             ibikeViewData.sarea = ibikeDeatil.sarea!
             ibikeViewData.sna = ibikeDeatil.sna!
@@ -38,12 +38,51 @@ class BikeData: NSObject {
         return list
     }
     
-    func getJsonFromURL() {
+    func readData() -> NSMutableArray {
+        // full path for local file data.plist
+        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+        let path = documentDir.stringByAppendingPathComponent("Data.plist")
+        var data = NSMutableDictionary(contentsOfFile: path)!
+        
+        let favoriteList = data.objectForKey("FavoriteList")! as! NSMutableArray
+        
+        return favoriteList
+    }
+    
+    func addData(favoriteString: NSString) {
+        // full path for local file data.plist
+        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+        let path = documentDir.stringByAppendingPathComponent("Data.plist")
+        var data = NSMutableDictionary(contentsOfFile: path)!
+        
+        let favoriteList: AnyObject? = data.objectForKey("FavoriteList")
+        
+        favoriteList?.addObject("\(favoriteString)")
+        
+        data.setObject(favoriteList!, forKey: "FavoriteList")
+        
+        data.writeToFile(path, atomically: true)
+    }
+    
+    func delData(newArr: NSArray) {
+        // full path for local file data.plist
+        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
+        let path = documentDir.stringByAppendingPathComponent("Data.plist")
+        var data = NSMutableDictionary(contentsOfFile: path)!
+        
+        let favoriteList: AnyObject = data.objectForKey("FavoriteList")!
+        
+        data.setObject(newArr, forKey: "FavoriteList")
+        
+        data.writeToFile(path, atomically: true)
+    }
+    
+    private func getJsonFromURL() {
         let data = NSData(contentsOfURL: iBikeUrl, options: NSDataReadingOptions.DataReadingUncached, error: nil)
         
         let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil)
         
-        iBikes = NSArray(array: json as NSArray)
+        iBikes = NSArray(array: json as! NSArray)
     }
 
 }
