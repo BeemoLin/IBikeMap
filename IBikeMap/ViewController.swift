@@ -31,7 +31,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         
         self.bannerView.rootViewController = self
         
-        self.bannerView.backgroundColor = UIColor.blackColor()
+        self.bannerView.backgroundColor = UIColor.clearColor()
         
         var request: GADRequest = GADRequest()
         
@@ -40,6 +40,10 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         self.bannerView.loadRequest(request)
         
         self.view.addSubview(self.bannerView)
+        
+        self.navigationController?.navigationBar.backgroundColor = UIColor(red: 0.11, green: 0.278, blue: 0.49, alpha: 0.7)
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
     }
     
     // 點擊地標
@@ -140,7 +144,9 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         var statusbarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
         var windowHeight = navbarHeight! + statusbarHeight + 10
         
-        var mWindow = UIView(frame:CGRectMake(0, 0, viewWidth, 80))
+        let navigationHeight = self.navigationController?.navigationBar.frame.maxY
+        
+        var mWindow = UIView(frame:CGRectMake(0, navigationHeight!, viewWidth, 80))
         mWindow.autoresizesSubviews = true
         mWindow.autoresizingMask = UIViewAutoresizing.FlexibleWidth
         mWindow.backgroundColor = UIColor(white: 1, alpha: 0.6)

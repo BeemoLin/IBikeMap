@@ -14,9 +14,7 @@ class BikeTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.backgroundColor = UIColor.clearColor()
-        
+
         var bikeData = BikeData()
         ibikeList = bikeData.getBikeList()
         
