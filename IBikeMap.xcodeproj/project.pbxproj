@@ -26,6 +26,9 @@
 		77BE7A431ABC0D8B00DDD094 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BE7A421ABC0D8B00DDD094 /* EventKit.framework */; };
 		77BE7A451ABC0D9A00DDD094 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BE7A441ABC0D9A00DDD094 /* EventKitUI.framework */; };
 		77BE7A471ABC0DA900DDD094 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77BE7A461ABC0DA900DDD094 /* MessageUI.framework */; };
+		77D52B701C58D9EC000FF477 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D52B6F1C58D9EC000FF477 /* libz.tbd */; };
+		77D52B721C58DA07000FF477 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D52B711C58DA07000FF477 /* libicucore.tbd */; };
+		77D52B741C58DA12000FF477 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D52B731C58DA12000FF477 /* libc++.tbd */; };
 		77E57E231ABBAA1600A8870F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E57E221ABBAA1600A8870F /* AppDelegate.swift */; };
 		77E57E251ABBAA1600A8870F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E57E241ABBAA1600A8870F /* ViewController.swift */; };
 		77E57E281ABBAA1600A8870F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77E57E261ABBAA1600A8870F /* Main.storyboard */; };
@@ -38,9 +41,6 @@
 		77E57E501ABBAC7E00A8870F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E57E4F1ABBAC7E00A8870F /* CoreText.framework */; };
 		77E57E521ABBAC8F00A8870F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E57E511ABBAC8F00A8870F /* GLKit.framework */; };
 		77E57E541ABBAC9C00A8870F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E57E531ABBAC9C00A8870F /* ImageIO.framework */; };
-		77E57E561ABBACAC00A8870F /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E57E551ABBACAC00A8870F /* libc++.dylib */; };
-		77E57E581ABBACBB00A8870F /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E57E571ABBACBB00A8870F /* libicucore.dylib */; };
-		77E57E5A1ABBACC800A8870F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E57E591ABBACC800A8870F /* libz.dylib */; };
 		77E57E5C1ABBACD300A8870F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E57E5B1ABBACD300A8870F /* OpenGLES.framework */; };
 		77E57E5E1ABBACDC00A8870F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E57E5D1ABBACDC00A8870F /* QuartzCore.framework */; };
 		77E57E601ABBACE600A8870F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77E57E5F1ABBACE600A8870F /* SystemConfiguration.framework */; };
@@ -79,6 +79,9 @@
 		77BE7A421ABC0D8B00DDD094 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		77BE7A441ABC0D9A00DDD094 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		77BE7A461ABC0DA900DDD094 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		77D52B6F1C58D9EC000FF477 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		77D52B711C58DA07000FF477 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		77D52B731C58DA12000FF477 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		77E57E1D1ABBAA1600A8870F /* IBikeMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBikeMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E57E211ABBAA1600A8870F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77E57E221ABBAA1600A8870F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,9 +99,6 @@
 		77E57E4F1ABBAC7E00A8870F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		77E57E511ABBAC8F00A8870F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		77E57E531ABBAC9C00A8870F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		77E57E551ABBACAC00A8870F /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
-		77E57E571ABBACBB00A8870F /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
-		77E57E591ABBACC800A8870F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		77E57E5B1ABBACD300A8870F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		77E57E5D1ABBACDC00A8870F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		77E57E5F1ABBACE600A8870F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -110,6 +110,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77D52B741C58DA12000FF477 /* libc++.tbd in Frameworks */,
+				77D52B721C58DA07000FF477 /* libicucore.tbd in Frameworks */,
+				77D52B701C58D9EC000FF477 /* libz.tbd in Frameworks */,
 				77BE7A471ABC0DA900DDD094 /* MessageUI.framework in Frameworks */,
 				77BE7A451ABC0D9A00DDD094 /* EventKitUI.framework in Frameworks */,
 				77BE7A431ABC0D8B00DDD094 /* EventKit.framework in Frameworks */,
@@ -120,9 +123,6 @@
 				77E57E601ABBACE600A8870F /* SystemConfiguration.framework in Frameworks */,
 				77E57E5E1ABBACDC00A8870F /* QuartzCore.framework in Frameworks */,
 				77E57E5C1ABBACD300A8870F /* OpenGLES.framework in Frameworks */,
-				77E57E5A1ABBACC800A8870F /* libz.dylib in Frameworks */,
-				77E57E581ABBACBB00A8870F /* libicucore.dylib in Frameworks */,
-				77E57E561ABBACAC00A8870F /* libc++.dylib in Frameworks */,
 				77E57E541ABBAC9C00A8870F /* ImageIO.framework in Frameworks */,
 				77E57E521ABBAC8F00A8870F /* GLKit.framework in Frameworks */,
 				77E57E501ABBAC7E00A8870F /* CoreText.framework in Frameworks */,
@@ -248,6 +248,9 @@
 		77E57E421ABBAAEB00A8870F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77D52B731C58DA12000FF477 /* libc++.tbd */,
+				77D52B711C58DA07000FF477 /* libicucore.tbd */,
+				77D52B6F1C58D9EC000FF477 /* libz.tbd */,
 				77E6673C1AC1AD8500229B58 /* StoreKit.framework */,
 				77BE7A461ABC0DA900DDD094 /* MessageUI.framework */,
 				77BE7A441ABC0D9A00DDD094 /* EventKitUI.framework */,
@@ -261,9 +264,6 @@
 				77E57E5F1ABBACE600A8870F /* SystemConfiguration.framework */,
 				77E57E5D1ABBACDC00A8870F /* QuartzCore.framework */,
 				77E57E5B1ABBACD300A8870F /* OpenGLES.framework */,
-				77E57E591ABBACC800A8870F /* libz.dylib */,
-				77E57E571ABBACBB00A8870F /* libicucore.dylib */,
-				77E57E551ABBACAC00A8870F /* libc++.dylib */,
 				77E57E531ABBAC9C00A8870F /* ImageIO.framework */,
 				77E57E511ABBAC8F00A8870F /* GLKit.framework */,
 				77E57E4F1ABBAC7E00A8870F /* CoreText.framework */,
@@ -537,6 +537,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -558,6 +559,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

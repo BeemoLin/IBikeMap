@@ -59,20 +59,15 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         removeSubviews(50)
     }
     
-    func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
-        
-        let status = CLLocationManager.authorizationStatus()
-        if status == .AuthorizedWhenInUse {
-            let diffLatitude = abs(self.mapView.myLocation.coordinate.latitude - position.target.latitude) as Double
-            let diffLongitude = abs(self.mapView.myLocation.coordinate.longitude - position.target.longitude) as Double
-            
-            if self.mapView.myLocationEnabled {
-                if (diffLatitude < 0.000001 && diffLongitude < 0.000001) {
-                    removeSubviews(50)
-                }
+    func mapView(mapView: GMSMapView!, idleAtCameraPosition cameraPosition: GMSCameraPosition!) {
+        let handler = { (response : GMSReverseGeocodeResponse!, error: NSError!) -> Void in
+            if let result = response.firstResult() {
+                let marker = GMSMarker()
+                marker.position = cameraPosition.target
+                marker.title = result.lines[0] as! String
+                marker.snippet = result.lines[1] as! String
+                marker.map = mapView!
             }
-        } else {
-            // Fallback on earlier versions
         }
     }
     
