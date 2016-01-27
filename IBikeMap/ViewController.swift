@@ -33,7 +33,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         
         self.bannerView.backgroundColor = UIColor.clearColor()
         
-        var request: GADRequest = GADRequest()
+        let request: GADRequest = GADRequest()
         
         request.testDevices = ["d744895655b7a2536fe4da3cfb24721cec0b2cfb"]
         
@@ -61,23 +61,26 @@ class ViewController: UIViewController, GMSMapViewDelegate {
     
     func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
         
-        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
-            var diffLatitude = abs(self.mapView.myLocation.coordinate.latitude - position.target.latitude) as Double
-            var diffLongitude = abs(self.mapView.myLocation.coordinate.longitude - position.target.longitude) as Double
-        
+        let status = CLLocationManager.authorizationStatus()
+        if status == .AuthorizedWhenInUse {
+            let diffLatitude = abs(self.mapView.myLocation.coordinate.latitude - position.target.latitude) as Double
+            let diffLongitude = abs(self.mapView.myLocation.coordinate.longitude - position.target.longitude) as Double
+            
             if self.mapView.myLocationEnabled {
                 if (diffLatitude < 0.000001 && diffLongitude < 0.000001) {
                     removeSubviews(50)
                 }
             }
+        } else {
+            // Fallback on earlier versions
         }
     }
     
     private func moveToMarker(marker: GMSMarker) {
-        var ibikeData = BikeData()
+        let ibikeData = BikeData()
         ibikeList = ibikeData.getBikeList()
         let favoriteList = ibikeData.readData()
-        var camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 16)
+        let camera = GMSCameraPosition.cameraWithTarget(marker.position, zoom: 16)
         self.mapView.camera = camera
         
         var infoTitle = ""
@@ -86,7 +89,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         removeSubviews(50)
         
         for temp in ibikeList {
-            var tempDetail = temp as! BikeViewData
+            let tempDetail = temp as! BikeViewData
             
             if marker.title == tempDetail.sna {
                 onFocusSna = tempDetail.sna
@@ -95,12 +98,12 @@ class ViewController: UIViewController, GMSMapViewDelegate {
             }
         }
         
-        var viewWidth = self.mapView.frame.width
+        let viewWidth = self.mapView.frame.width
         
         // 標題
-        var titleSize = CGRect(x: 0, y: 10, width: viewWidth, height: 20)
+        let titleSize = CGRect(x: 0, y: 10, width: viewWidth, height: 20)
         
-        var navTitleLabel = UILabel()
+        let navTitleLabel = UILabel()
         navTitleLabel.frame = titleSize
         navTitleLabel.font = UIFont.boldSystemFontOfSize(18.0)
         navTitleLabel.autoresizesSubviews = true
@@ -109,9 +112,9 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         navTitleLabel.textAlignment = NSTextAlignment.Center
         
         // 內文
-        var textSize = CGRect(x: 0, y: 30, width: viewWidth, height: 50)
+        let textSize = CGRect(x: 0, y: 30, width: viewWidth, height: 50)
         
-        var mTextView: UITextView = UITextView()
+        let mTextView: UITextView = UITextView()
         mTextView.frame = textSize
         mTextView.font = UIFont.systemFontOfSize(15.0)
         mTextView.editable = false
@@ -122,7 +125,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         mTextView.textAlignment = NSTextAlignment.Left
         
         // 加到最愛按鈕
-        var buttonSize = CGRect(x: (viewWidth - 60), y: 15, width: 45, height: 45)
+        let buttonSize = CGRect(x: (viewWidth - 60), y: 15, width: 45, height: 45)
         
         var imageName = "un_star.png"
         for temp in favoriteList  {
@@ -132,15 +135,15 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         }
         
         let buttonImage = UIImage(named: imageName)?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        let mButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let mButton = UIButton(type: UIButtonType.Custom)
         
-        mButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+        //mButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         mButton.frame = buttonSize
         mButton.backgroundColor = UIColor.clearColor()
         mButton.setImage(buttonImage, forState: .Normal)
         mButton.addTarget(self, action: Selector("starButton:"), forControlEvents: .TouchUpInside)
         
-        var navbarHeight = self.navigationController?.navigationBar.frame.origin.y
+        let navbarHeight = self.navigationController?.navigationBar.frame.origin.y
         var statusbarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
         var windowHeight = navbarHeight! + statusbarHeight + 10
         
@@ -160,20 +163,20 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         //Constraints
         let viewsDict = ["btn": mButton]
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[btn]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDict))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[btn]-15-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict))
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-15-[btn]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDict))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-15-[btn]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict))
             
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[btn(==45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDict))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[btn(==45)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict))
             
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[btn(==45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDict))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[btn(==45)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: viewsDict))
         
         selectMarker = marker
     }
     
     // 加入最愛
     func starButton(sender: UIButton!) {
-        var ibikeData = BikeData()
+        let ibikeData = BikeData()
         let favoriteList = ibikeData.readData()
         var haveStar = false
         
@@ -197,7 +200,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
     
     // 移除副表單
     private func removeSubviews(viewTag: NSInteger){
-        var subviews = self.mapView.subviews
+        let subviews = self.mapView.subviews
         
         for subview in subviews {
             subview.viewWithTag(viewTag)?.removeFromSuperview()
@@ -208,7 +211,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
     
     // 繪製地標
     func drawMaker() {
-        var ibikeData = BikeData()
+        let ibikeData = BikeData()
         ibikeList = ibikeData.getBikeList()
         
         removeSubviews(50)
@@ -219,7 +222,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
             defaultLocation = self.mapView.myLocation.coordinate
         }
         
-        var camera = GMSCameraPosition.cameraWithTarget(defaultLocation, zoom: 14)
+        let camera = GMSCameraPosition.cameraWithTarget(defaultLocation, zoom: 14)
         
         self.mapView.camera = camera
         self.mapView.myLocationEnabled = true
@@ -231,8 +234,8 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         
         for temp in ibikeList {
             
-            var tempDetail = temp as! BikeViewData
-            var market = GMSMarker()
+            let tempDetail = temp as! BikeViewData
+            let market = GMSMarker()
             
             market.position = CLLocationCoordinate2DMake(tempDetail.lat, tempDetail.lng)
             market.title = "\(tempDetail.sna)"

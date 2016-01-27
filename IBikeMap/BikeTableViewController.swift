@@ -15,17 +15,23 @@ class BikeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var bikeData = BikeData()
+        let bikeData = BikeData()
         ibikeList = bikeData.getBikeList()
         
-        var refreshControl = UIRefreshControl()
+        let descriptor: NSSortDescriptor = NSSortDescriptor(key: "sarea", ascending: true)
+        ibikeList = ibikeList.sortedArrayUsingDescriptors([descriptor])
+        
+        let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: Selector("sortArray"), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = refreshControl
     }
     
     func sortArray() {
-        var bikeData = BikeData()
+        let bikeData = BikeData()
         ibikeList = bikeData.getBikeList()
+        
+        let descriptor: NSSortDescriptor = NSSortDescriptor(key: "sarea", ascending: true)
+        ibikeList = ibikeList.sortedArrayUsingDescriptors([descriptor])
         
         tableView.reloadData()
         refreshControl?.endRefreshing()
@@ -43,7 +49,7 @@ class BikeTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
         
         let sna = (ibikeList[indexPath.section] as! BikeViewData).sna
         let update = (ibikeList[indexPath.section] as! BikeViewData).update
@@ -70,7 +76,7 @@ class BikeTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var mapView = self.storyboard?.instantiateViewControllerWithIdentifier("MapView") as! ViewController
+        let mapView = self.storyboard?.instantiateViewControllerWithIdentifier("MapView") as! ViewController
         
         mapView.selectSna = (ibikeList[indexPath.section] as! BikeViewData).sna
         self.navigationController?.pushViewController(mapView, animated: true)

@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "6E9B516E563752D8EA1B7D6675801CD431B68481",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6E9B516E563752D8EA1B7D6675801CD431B68481" : 0,
+    "14EED04FD478F6F76D93457A625B6D8CE8BED1AD" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B421F58A-0AB6-411F-8D63-1F320B13CC62",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6E9B516E563752D8EA1B7D6675801CD431B68481" : "IBikeMap",
+    "14EED04FD478F6F76D93457A625B6D8CE8BED1AD" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "IBikeMap",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "IBikeMap.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:BeemoLin\/ibike.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "14EED04FD478F6F76D93457A625B6D8CE8BED1AD"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:BeemoLin\/IBikeMap.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6E9B516E563752D8EA1B7D6675801CD431B68481"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ import UIKit
 
 class BikeData: NSObject {
     private var iBikes: NSArray = NSArray()
-    private let iBikeUrl = NSURL(string: "http://www.bmo.tw/ibike.json")!
+    private let iBikeUrl = NSURL(string: "http://61.223.249.207/ibike.json")!
     
     override init() {
         super.init()
@@ -21,8 +21,8 @@ class BikeData: NSObject {
         var list: [BikeViewData] = Array()
         
         for result in iBikes {
-            var ibikeViewData = BikeViewData()
-            var ibikeDeatil = BikeDetail(ibikes: result as! NSDictionary)
+            let ibikeViewData = BikeViewData()
+            let ibikeDeatil = BikeDetail(ibikes: result as! NSDictionary)
             
             ibikeViewData.sarea = ibikeDeatil.sarea!
             ibikeViewData.sna = ibikeDeatil.sna!
@@ -40,9 +40,9 @@ class BikeData: NSObject {
     
     func readData() -> NSMutableArray {
         // full path for local file data.plist
-        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        let path = documentDir.stringByAppendingPathComponent("Data.plist")
-        var data = NSMutableDictionary(contentsOfFile: path)!
+        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
+        let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("Data.plist")
+        let data = NSMutableDictionary(contentsOfFile: path.path!)!
         
         let favoriteList = data.objectForKey("FavoriteList")! as! NSMutableArray
         
@@ -51,9 +51,9 @@ class BikeData: NSObject {
     
     func addData(favoriteString: NSString) {
         // full path for local file data.plist
-        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        let path = documentDir.stringByAppendingPathComponent("Data.plist")
-        var data = NSMutableDictionary(contentsOfFile: path)!
+        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
+        let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("Data.plist")
+        let data = NSMutableDictionary(contentsOfFile: path.path!)!
         
         let favoriteList: AnyObject? = data.objectForKey("FavoriteList")
         
@@ -61,28 +61,43 @@ class BikeData: NSObject {
         
         data.setObject(favoriteList!, forKey: "FavoriteList")
         
-        data.writeToFile(path, atomically: true)
+        data.writeToFile(path.path!, atomically: true)
     }
     
     func delData(newArr: NSArray) {
         // full path for local file data.plist
-        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        let path = documentDir.stringByAppendingPathComponent("Data.plist")
-        var data = NSMutableDictionary(contentsOfFile: path)!
+        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
+        let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("Data.plist")
+        let data = NSMutableDictionary(contentsOfFile: path.path!)!
         
         let favoriteList: AnyObject = data.objectForKey("FavoriteList")!
         
         data.setObject(newArr, forKey: "FavoriteList")
         
-        data.writeToFile(path, atomically: true)
+        data.writeToFile(path.path!, atomically: true)
     }
     
     private func getJsonFromURL() {
-        let data = NSData(contentsOfURL: iBikeUrl, options: NSDataReadingOptions.DataReadingUncached, error: nil)
+        var data: NSData = NSData.init()
+        do {
+            data = try NSData(contentsOfURL: iBikeUrl, options: NSDataReadingOptions.DataReadingUncached)
+            print(data)
+        } catch {
+            print(error)
+        }
         
-        let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil)
+        var json: AnyObject? = nil
         
-        iBikes = NSArray(array: json as! NSArray)
+        do {
+            json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
+            print(json)
+        } catch {
+            print(error)
+        }
+        
+        if json != nil {
+            iBikes = NSArray(array: json as! NSArray)
+        }
     }
 
 }

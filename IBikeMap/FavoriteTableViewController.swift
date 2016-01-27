@@ -29,7 +29,7 @@ class FavoriteTableViewController: UITableViewController {
         ibikeList = bikeData.getBikeList()
         favoriteList = bikeData.readData()
         
-        for (index, element) in enumerate(favoriteList) {
+        for (index, element) in favoriteList.enumerate() {
             favoriteList[index] = element
         }
         

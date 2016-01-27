@@ -20,16 +20,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
         
-        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        let path = documentDir.stringByAppendingPathComponent("Data.plist")
+        let documentDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
+        let path = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("Data.plist")
+
         
-        var fileManager = NSFileManager.defaultManager()
+        let fileManager = NSFileManager.defaultManager()
         
-        if (!(fileManager.fileExistsAtPath(path)))
+        if (!(fileManager.fileExistsAtPath(path.path!)))
         {
-            println("重寫檔案")
-            var bundle = NSBundle.mainBundle().pathForResource("Data", ofType: "plist")!
-            fileManager.copyItemAtPath(bundle, toPath: path, error:nil)
+            print("重寫檔案")
+            let bundle = NSBundle.mainBundle().pathForResource("Data", ofType: "plist")!
+            
+            do {
+                try fileManager.copyItemAtPath(bundle, toPath: path.path!)
+            } catch {
+                print(error)
+            }
+            
         }
         
         return true
