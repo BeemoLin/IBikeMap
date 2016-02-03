@@ -10,7 +10,7 @@ import UIKit
 
 class BikeData: NSObject {
     private var iBikes: NSArray = NSArray()
-    private let iBikeUrl = NSURL(string: "http://61.223.249.207/ibike.json")!
+    private let iBikeUrl = NSURL(string: "http://59.126.7.50/ibike.json")!
     
     override init() {
         super.init()
