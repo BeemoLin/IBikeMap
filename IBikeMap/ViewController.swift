@@ -27,18 +27,16 @@ class ViewController: UIViewController, GMSMapViewDelegate {
     override func viewWillAppear(animated: Bool) {
         drawMaker()
         
-        self.bannerView.adUnitID = "ca-app-pub-9476662783947033/6247524104"
-        
-        self.bannerView.rootViewController = self
-        
-        self.bannerView.backgroundColor = UIColor.clearColor()
-        
+        bannerView.adUnitID = "ca-app-pub-9476662783947033/6247524104"
+        bannerView.rootViewController = self
         let request: GADRequest = GADRequest()
+        //request.testDevices = ["e42e4fd214e67f561de549ca133a2cd7"]
+        //request.testDevices = [kGADSimulatorID]
+        bannerView.loadRequest(request)
         
-        request.testDevices = ["d744895655b7a2536fe4da3cfb24721cec0b2cfb"]
-        
-        self.bannerView.loadRequest(request)
-        
+        /*
+        self.bannerView.adUnitID = "ca-app-pub-9476662783947033/6247524104"
+        */
         self.view.addSubview(self.bannerView)
         
         self.navigationController?.navigationBar.backgroundColor = UIColor(red: 0.11, green: 0.278, blue: 0.49, alpha: 0.7)

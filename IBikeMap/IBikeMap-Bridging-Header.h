@@ -7,5 +7,3 @@
 //
 
 #import <GoogleMaps/GoogleMaps.h>
-#import <GoogleMobileAds/GoogleMobileAds.h>
-#import <GoogleMobileAds/GADRequest.h>
